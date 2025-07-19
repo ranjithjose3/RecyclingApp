@@ -7,12 +7,24 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "android-clean": "cd android && ./gradlew clean && cd .. && npx react-native run-android"
   },
   "dependencies": {
+    "@notifee/react-native": "^9.1.8",
+    "@react-native/new-app-screen": "0.80.1",
+    "@react-navigation/bottom-tabs": "^7.4.2",
+    "@react-navigation/native": "^7.1.14",
+    "notifee": "^0.0.1",
     "react": "19.1.0",
     "react-native": "0.80.1",
-    "@react-native/new-app-screen": "0.80.1"
+    "react-native-calendars": "^1.1313.0",
+    "react-native-gesture-handler": "^2.27.1",
+    "react-native-image-picker": "^8.2.1",
+    "react-native-reanimated": "^3.18.0",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-screens": "^4.13.1",
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
