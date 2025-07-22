@@ -1,40 +1,43 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+import { View, Text } from 'react-native';
+import { CalendarProvider, ExpandableCalendar, AgendaList } from 'react-native-calendars';
+import { agendaItems, getMarkedDates } from '../utils/mockData';
 
 export default function CalendarScreen() {
+  const today = new Date().toISOString().split('T')[0];
+
+  const renderItem = ({ item }) => {
+    if (!item?.title) return null;
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          padding: 10,
+          margin: 5,
+          borderRadius: 5
+        }}
+      >
+        <Text>{item.hour} - {item.title}</Text>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Reminders</Text>
-      <Calendar
-        markedDates={{
-          '2025-03-03': { marked: true, dotColor: 'green' },
-          '2025-03-05': { marked: true, dotColor: 'orange' },
+    <CalendarProvider date={today} showTodayButton>
+      <ExpandableCalendar
+        markingType={'multi-dot'} // ✅ Multi-dot mode
+        firstDay={1}
+        markedDates={getMarkedDates()}
+        theme={{
+          todayTextColor: '#007AFF',
+          selectedDayBackgroundColor: '#00adf5'
         }}
       />
-      <View style={styles.card}>
-        <Text style={styles.title}>Compost Pick-up</Text>
-        <Text style={styles.time}>9:00am - 11:00am</Text>
-      </View>
-      <View style={[styles.card, { borderLeftColor: 'orange' }]}>
-        <Text style={styles.title}>Garbage Pick-up</Text>
-        <Text style={styles.time}>7:00am - 12:00pm</Text>
-      </View>
-    </View>
+      <AgendaList
+        sections={agendaItems}
+        renderItem={renderItem}
+        sectionStyle={{ backgroundColor: '#f2f2f2' }}
+      />
+    </CalendarProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  header: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
-  card: {
-    borderWidth: 1,
-    borderLeftWidth: 5,
-    borderLeftColor: 'green',
-    padding: 15,
-    borderRadius: 8,
-    marginVertical: 8,
-  },
-  title: { fontSize: 16, fontWeight: '600' },
-  time: { color: 'gray', marginTop: 4 },
-});
